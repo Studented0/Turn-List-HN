@@ -50,7 +50,7 @@ export default function RemoteControlPage() {
       {/* Header row */}
       <div className="flex items-baseline justify-between mb-8 gap-4 flex-wrap">
         <h1 className="text-sm border-b border-black dark:border-white pb-2 flex-1">
-          Danh Sách Lượt
+          Turn List / Danh Sách Lượt
         </h1>
         <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400 shrink-0">
           {updatedAt && (

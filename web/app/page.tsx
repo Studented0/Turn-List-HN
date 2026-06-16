@@ -105,7 +105,7 @@ export default function InputPage() {
       >
         <div className="space-y-1">
           <label htmlFor="id" className="block text-sm">
-            Số Định Danh
+            ID Number / Số Định Danh
           </label>
           <input
             id="id"
@@ -127,7 +127,7 @@ export default function InputPage() {
 
         <div className="space-y-1">
           <label htmlFor="value" className="block text-sm">
-            Nhập Số
+            Input Number / Nhập Số
           </label>
           <input
             id="value"

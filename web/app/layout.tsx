@@ -32,10 +32,10 @@ export default function RootLayout({
         <header className="border-b border-black dark:border-white">
           <nav className="max-w-2xl mx-auto px-4 py-3 flex items-center gap-6">
             <a href="/" className="text-sm hover:underline">
-              Đặt Vào Trong
+              Input / Đặt Vào Trong
             </a>
             <a href="/leaderboard" className="text-sm hover:underline">
-              Danh Sách Lượt
+              Turn List / Danh Sách Lượt
             </a>
             <a href="/admin" className="text-sm hover:underline">
               Admin

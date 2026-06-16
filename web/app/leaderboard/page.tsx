@@ -39,7 +39,7 @@ export default function LeaderboardPage() {
 
   const heading = (
     <h1 className="text-sm mb-6 border-b border-black dark:border-white pb-2">
-      Danh Sách Lượt
+      Turn List / Danh Sách Lượt
     </h1>
   )
 
