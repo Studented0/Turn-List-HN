@@ -38,7 +38,7 @@ REM Open the browser after the server has had 3 seconds to start
 start "" cmd /c "timeout /t 3 /nobreak >nul && start http://localhost:3000"
 
 REM Bind to 0.0.0.0 so LAN devices can reach the network URL above
-node_modules\.bin\next dev -H 0.0.0.0 -p 3000
+call npm run dev -- -H 0.0.0.0 -p 3000
 
 echo.
 echo Server stopped. Press any key to close this window.
