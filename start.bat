@@ -1,6 +1,14 @@
 @echo off
 setlocal EnableDelayedExpansion
 
+REM ── Require administrator privileges (needed to open the firewall) ────────────
+net session >nul 2>&1
+if errorlevel 1 (
+    echo Requesting administrator privileges for firewall access...
+    powershell -NoProfile -Command "Start-Process -FilePath '%~f0' -Verb RunAs"
+    exit /b 0
+)
+
 REM ── Check for Node.js ────────────────────────────────────────────────────────
 where node >nul 2>&1
 if errorlevel 1 (
@@ -65,19 +73,27 @@ if not exist "node_modules\" (
     echo.
 )
 
-REM ── Detect LAN IP ────────────────────────────────────────────────────────────
-set "LOCAL_IP="
-for /f "delims=" %%a in ('powershell -NoProfile -Command "try{(Get-NetIPAddress -AddressFamily IPv4 | Where-Object{$_.IPAddress -notmatch '^127\.' -and $_.IPAddress -notmatch '^169\.254\.'} | Select-Object -First 1).IPAddress}catch{''}"') do set "LOCAL_IP=%%a"
-if "!LOCAL_IP!"=="" set "LOCAL_IP=<network-ip-unavailable>"
+REM ── Open port 3000 in Windows Firewall so other devices can connect ──────────
+netsh advfirewall firewall show rule name="CadenApp Port 3000" >nul 2>&1
+if errorlevel 1 (
+    netsh advfirewall firewall add rule name="CadenApp Port 3000" dir=in action=allow protocol=TCP localport=3000 >nul
+    echo Firewall: opened port 3000 for network access.
+    echo.
+)
 
+REM ── Show all LAN IPs (try each one on other devices) ─────────────────────────
 echo.
 echo ========================================
 echo  CadenApp
 echo.
-echo  Local:   http://localhost:3000
-echo  Network: http://!LOCAL_IP!:3000
+echo  This device:  http://localhost:3000
 echo.
-echo  Data:    %~dp0web\data\database.xlsx
+echo  Other devices - try each address below:
+for /f "delims=" %%a in ('powershell -NoProfile -Command "Get-NetIPAddress -AddressFamily IPv4 | Where-Object{$_.IPAddress -notmatch '^127\.' -and $_.IPAddress -notmatch '^169\.254\.'} | Select-Object -ExpandProperty IPAddress"') do (
+    echo    http://%%a:3000
+)
+echo.
+echo  Data:  %~dp0web\data\database.xlsx
 echo  (double-click "Open Data.bat" to open it)
 echo ========================================
 echo.
